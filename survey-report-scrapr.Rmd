@@ -1,5 +1,4 @@
 ---
-author: Padraic Murphy
 output: github_document
 editor_options: 
   chunk_output_type: console
@@ -15,26 +14,22 @@ library(emo)
 library(here)
 ```
 
-<style>
-p.caption {
-  font-size: 0.8em;
-}
-</style>
-
-# Free tables from PDF prison! `r emo::ji('hammer_and_pick')` `r emo::ji('hole')` `r emo::ji('helicopter')` {.tabset .tabset-fade .tabset-pills}
+# Free tables from PDF prison! `r emo::ji('hammer_and_pick')` `r emo::ji('hole')` `r emo::ji('helicopter')`
 
 ## Motivation
 Household surveys, particularly [DHS](https://dhsprogram.com/) and [MICS](http://mics.unicef.org/), are a key global health resource and their results are often relied upon to inform programmatic and strategic decision-making. Unfortunately, these data are scattered across hundreds of pages in a survey report and locked away in PDF format. The goal here is to detail an approach to break out of PDF prison and enjoy the sweet freedom of tidy data frames.
 
 Here is a typical data table from a DHS report - note the liberal use of <span style="color:red">multi-level headers</span> and <span style="color:orange">row headers</span>:
 
+![](images/dhs_uganda_2016_tableEx.png)
 ``` {r img1, echo = FALSE, out.width = '100%', fig.cap = "Source: Uganda Bureau of Statistics (UBOS) and ICF. 2018. Uganda Demographic and Health Survey 2016. Kampala, Uganda and Rockville, Maryland, USA: UBOS and ICF."}
-knitr::include_graphics(here("images","dhs_uganda_2016_tableEx.png"))
 ```
 
-##### *Sidenote: the DHS Program implemented the [Indicator Data API](https://api.dhsprogram.com/#/index.html) with excellent documentation. This, of course, is ideal as one can interface with DHS survey data without ever touching a PDF `r emo::ji("tada")`*  
+Sidenote: the DHS Program implemented the [Indicator Data API](https://api.dhsprogram.com/#/index.html) with excellent documentation. This, of course, is ideal as one can interface with DHS survey data without ever touching a PDF `r emo::ji("tada")`  
 
-#### **`r emo::ji("rotating_light")` Please see my package [`fetchdhs`](https://github.com/murphy-xq/fetchdhs) to do just that! `r emo::ji("rotating_light")`** {align=center}  
+<center>
+#### **`r emo::ji("rotating_light")` Please see my [`fetchdhs`](https://github.com/murphy-xq/fetchdhs) package to do just that! `r emo::ji("rotating_light")`**
+</center>
 
 ## Extract and tidy
 
@@ -139,8 +134,8 @@ clean_row_headr <- function(df, keys) {
 #### Assemble column headers
 Unfortunately, `tabulizer` does not reliably parse column headers from DHS and MICS tables due to their often irregular, multi-level structure. Because of this, we write a function `make_headr` to assemble the desired column `headers`. We feed the function each level of the column headers: <span style="color:red">parent</span> or <span style="color:blue">child</span>.
 
+![](images/dhs_uganda_2016_headrEx.png)
 ``` {r img2, echo = FALSE, out.width = '100%', fig.cap = "Source: Uganda Bureau of Statistics (UBOS) and ICF. 2018. Uganda Demographic and Health Survey 2016. Kampala, Uganda and Rockville, Maryland, USA: UBOS and ICF."}
-knitr::include_graphics(here("images","dhs_uganda_2016_headrEx.png"))
 ```
 
 ```{r assemble_headers}
@@ -312,8 +307,8 @@ master_df <- full_rshp %>%
 master_df
 ```
 
-### We just built a function that scraped 8 tables of data from 4 different PDFs and created a tidy data frame `r emo::ji("clap")` `r emo::ji("clap")` `r emo::ji("clap")` {align=center}  
+### We just built a function that scraped 8 tables of data from 4 different PDFs and created a tidy data frame `r emo::ji("clap")` `r emo::ji("clap")` `r emo::ji("clap")`
 
-```{r, fig.align="center", out.width="60%", echo=FALSE}
-knitr::include_graphics(here("images","shawshank_escape.gif"))
-````
+<center>
+![](images/shawshank_escape.gif)
+</center>

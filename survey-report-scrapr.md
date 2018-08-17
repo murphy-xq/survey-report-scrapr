@@ -1,10 +1,3 @@
-Padraic Murphy
-
-<style>
-p.caption {
-  font-size: 0.8em;
-}
-</style>
 
 # Free tables from PDF prison\! ⚒ 🕳 🚁
 
@@ -20,14 +13,21 @@ freedom of tidy data frames.
 
 Here is a typical data table from a DHS report - note the liberal use of
 <span style="color:red">multi-level headers</span> and
-<span style="color:orange">row
-headers</span>:
+<span style="color:orange">row headers</span>:
 
-<img src="/Users/user1/Desktop/R/git_projects/survey-report-scrapr/images/dhs_uganda_2016_tableEx.png" title="Source: Uganda Bureau of Statistics (UBOS) and ICF. 2018. Uganda Demographic and Health Survey 2016. Kampala, Uganda and Rockville, Maryland, USA: UBOS and ICF." alt="Source: Uganda Bureau of Statistics (UBOS) and ICF. 2018. Uganda Demographic and Health Survey 2016. Kampala, Uganda and Rockville, Maryland, USA: UBOS and ICF." width="100%" />
+![](images/dhs_uganda_2016_tableEx.png)
 
-##### *Sidenote: the DHS Program implemented the [Indicator Data API](https://api.dhsprogram.com/#/index.html) with excellent documentation. This, of course, is ideal as one can interface with DHS survey data without ever touching a PDF 🎉*
+Sidenote: the DHS Program implemented the [Indicator Data
+API](https://api.dhsprogram.com/#/index.html) with excellent
+documentation. This, of course, is ideal as one can interface with DHS
+survey data without ever touching a PDF
+🎉
 
-#### **🚨 Please see my package [`fetchdhs`](https://github.com/murphy-xq/fetchdhs) to do just that\! 🚨**
+<center>
+
+#### **🚨 Please see my [`fetchdhs`](https://github.com/murphy-xq/fetchdhs) package to do just that\! 🚨**
+
+</center>
 
 ## Extract and tidy
 
@@ -215,7 +215,7 @@ desired column `headers`. We feed the function each level of the column
 headers: <span style="color:red">parent</span> or
 <span style="color:blue">child</span>.
 
-<img src="/Users/user1/Desktop/R/git_projects/survey-report-scrapr/images/dhs_uganda_2016_headrEx.png" title="Source: Uganda Bureau of Statistics (UBOS) and ICF. 2018. Uganda Demographic and Health Survey 2016. Kampala, Uganda and Rockville, Maryland, USA: UBOS and ICF." alt="Source: Uganda Bureau of Statistics (UBOS) and ICF. 2018. Uganda Demographic and Health Survey 2016. Kampala, Uganda and Rockville, Maryland, USA: UBOS and ICF." width="100%" />
+![](images/dhs_uganda_2016_headrEx.png)
 
 ``` r
 make_col_headr <- function(child, parent, sep = "_") {
@@ -531,4 +531,8 @@ master_df
 
 ### We just built a function that scraped 8 tables of data from 4 different PDFs and created a tidy data frame 👏 👏 👏
 
-<img src="/Users/user1/Desktop/R/git_projects/survey-report-scrapr/images/shawshank_escape.gif" width="60%" style="display: block; margin: auto;" />
+<center>
+
+![](images/shawshank_escape.gif)
+
+</center>
