@@ -1,9 +1,9 @@
 # survey-report-scrapr
 📄 ⛏ **Break data out of PDF prison**
 
-This walkthrough demonstrates how to: 
+This [walkthrough](survey-report-scrapr.md) demonstrates how to: 
 * scrape data from PDF tables
-* manage unwieldy header types
+* manage unwieldy header types using 
 * tidy scraped data output
-* generalize those steps into a scraper function
-* iterate across multiple PDFs
+* abstract steps into a scraper function
+* iterate across multiple tables and PDFs
