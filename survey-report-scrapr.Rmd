@@ -27,9 +27,9 @@ Here is a typical data table from a DHS report - note the liberal use of <span s
 
 Sidenote: the DHS Program implemented the [Indicator Data API](https://api.dhsprogram.com/#/index.html) with excellent documentation. This, of course, is ideal as one can interface with DHS survey data without ever touching a PDF `r emo::ji("tada")`  
 
-<center>
+<p align="center">
 #### **`r emo::ji("rotating_light")` Please see my [`fetchdhs`](https://github.com/murphy-xq/fetchdhs) package to do just that! `r emo::ji("rotating_light")`**
-</center>
+</p>
 
 ## Extract and tidy
 
@@ -288,7 +288,7 @@ tbl_scrapes[['output']][[4]][[2]]
 # row-bind all reshaped data frames from 'output' list-column
 full_rshp <- tbl_scrapes[["output"]] %>%
   map_dfr(2) %>%
-  separate(source, c("svy_type", "country", "year"), sep = "-", remove = FALSE) %>%
+  separate(source, c("svy_type", "country", "year"), sep = "_", remove = FALSE) %>%
   separate(indicator, c("indicator","denom_grp"), sep = "_") %>%
   mutate(value = as.numeric(value),
          # key needed to create `denom_values` variable in `master_df`
@@ -309,6 +309,6 @@ master_df
 
 ### We just built a function that scraped 8 tables of data from 4 different PDFs and created a tidy data frame `r emo::ji("clap")` `r emo::ji("clap")` `r emo::ji("clap")`
 
-<center>
+<p align="center">
 ![](images/shawshank_escape.gif)
-</center>
+</p>

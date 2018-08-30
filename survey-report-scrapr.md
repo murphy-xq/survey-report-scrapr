@@ -23,11 +23,11 @@ documentation. This, of course, is ideal as one can interface with DHS
 survey data without ever touching a PDF
 🎉
 
-<center>
+<p align="center">
 
 #### **🚨 Please see my [`fetchdhs`](https://github.com/murphy-xq/fetchdhs) package to do just that\! 🚨**
 
-</center>
+</p>
 
 ## Extract and tidy
 
@@ -482,7 +482,7 @@ tbl_scrapes[['output']][[4]][[2]]
 # row-bind all reshaped data frames from 'output' list-column
 full_rshp <- tbl_scrapes[["output"]] %>%
   map_dfr(2) %>%
-  separate(source, c("svy_type", "country", "year"), sep = "-", remove = FALSE) %>%
+  separate(source, c("svy_type", "country", "year"), sep = "_", remove = FALSE) %>%
   separate(indicator, c("indicator","denom_grp"), sep = "_") %>%
   mutate(value = as.numeric(value),
          # key needed to create `denom_values` variable in `master_df`
@@ -490,18 +490,18 @@ full_rshp <- tbl_scrapes[["output"]] %>%
 
 full_rshp
 ## # A tibble: 1,079 x 11
-##    source  svy_type  country year  tbl_id  row_grp  row_lbl indicator denom_grp value denom_key    
-##    <chr>   <chr>     <chr>   <chr> <chr>   <chr>    <chr>   <chr>     <chr>     <dbl> <chr>        
-##  1 dhs_ha… dhs_hait… <NA>    <NA>  hti_tb… Milieu … Urbain  hiv-posi… female      2.2 dhs_haiti_20…
-##  2 dhs_ha… dhs_hait… <NA>    <NA>  hti_tb… Milieu … Rural   hiv-posi… female      2.4 dhs_haiti_20…
-##  3 dhs_ha… dhs_hait… <NA>    <NA>  hti_tb… Départe… Aire M… hiv-posi… female      2.1 dhs_haiti_20…
-##  4 dhs_ha… dhs_hait… <NA>    <NA>  hti_tb… Départe… Reste … hiv-posi… female      1.6 dhs_haiti_20…
-##  5 dhs_ha… dhs_hait… <NA>    <NA>  hti_tb… Départe… Sud-Est hiv-posi… female      3.2 dhs_haiti_20…
-##  6 dhs_ha… dhs_hait… <NA>    <NA>  hti_tb… Départe… Nord    hiv-posi… female      2.7 dhs_haiti_20…
-##  7 dhs_ha… dhs_hait… <NA>    <NA>  hti_tb… Départe… Nord-E… hiv-posi… female      2.1 dhs_haiti_20…
-##  8 dhs_ha… dhs_hait… <NA>    <NA>  hti_tb… Départe… Artibo… hiv-posi… female      3.3 dhs_haiti_20…
-##  9 dhs_ha… dhs_hait… <NA>    <NA>  hti_tb… Départe… Centre  hiv-posi… female      1.5 dhs_haiti_20…
-## 10 dhs_ha… dhs_hait… <NA>    <NA>  hti_tb… Départe… Sud     hiv-posi… female      2   dhs_haiti_20…
+##    source  svy_type country year  tbl_id  row_grp  row_lbl  indicator denom_grp value denom_key    
+##    <chr>   <chr>    <chr>   <chr> <chr>   <chr>    <chr>    <chr>     <chr>     <dbl> <chr>        
+##  1 dhs_ha… dhs      haiti   2017  hti_tb… Milieu … Urbain   hiv-posi… female      2.2 dhs_haiti_20…
+##  2 dhs_ha… dhs      haiti   2017  hti_tb… Milieu … Rural    hiv-posi… female      2.4 dhs_haiti_20…
+##  3 dhs_ha… dhs      haiti   2017  hti_tb… Départe… Aire Mé… hiv-posi… female      2.1 dhs_haiti_20…
+##  4 dhs_ha… dhs      haiti   2017  hti_tb… Départe… Reste O… hiv-posi… female      1.6 dhs_haiti_20…
+##  5 dhs_ha… dhs      haiti   2017  hti_tb… Départe… Sud-Est  hiv-posi… female      3.2 dhs_haiti_20…
+##  6 dhs_ha… dhs      haiti   2017  hti_tb… Départe… Nord     hiv-posi… female      2.7 dhs_haiti_20…
+##  7 dhs_ha… dhs      haiti   2017  hti_tb… Départe… Nord-Est hiv-posi… female      2.1 dhs_haiti_20…
+##  8 dhs_ha… dhs      haiti   2017  hti_tb… Départe… Artibon… hiv-posi… female      3.3 dhs_haiti_20…
+##  9 dhs_ha… dhs      haiti   2017  hti_tb… Départe… Centre   hiv-posi… female      1.5 dhs_haiti_20…
+## 10 dhs_ha… dhs      haiti   2017  hti_tb… Départe… Sud      hiv-posi… female      2   dhs_haiti_20…
 ## # ... with 1,069 more rows
 
 # use right_join() to match denominator value for each observation
@@ -514,25 +514,25 @@ master_df <- full_rshp %>%
 
 master_df
 ## # A tibble: 802 x 10
-##    svy_type   country year  tbl_id   row_grp     row_lbl     indicator  value denom_grp denom_value
-##    <chr>      <chr>   <chr> <chr>    <chr>       <chr>       <chr>      <dbl> <chr>           <dbl>
-##  1 dhs_haiti… <NA>    <NA>  hti_tbl… Milieu de … Urbain      hiv-posit…   2.2 female           4479
-##  2 dhs_haiti… <NA>    <NA>  hti_tbl… Milieu de … Rural       hiv-posit…   2.4 female           5118
-##  3 dhs_haiti… <NA>    <NA>  hti_tbl… Département Aire Métro… hiv-posit…   2.1 female           2438
-##  4 dhs_haiti… <NA>    <NA>  hti_tbl… Département Reste Ouest hiv-posit…   1.6 female           1559
-##  5 dhs_haiti… <NA>    <NA>  hti_tbl… Département Sud-Est     hiv-posit…   3.2 female            502
-##  6 dhs_haiti… <NA>    <NA>  hti_tbl… Département Nord        hiv-posit…   2.7 female           1044
-##  7 dhs_haiti… <NA>    <NA>  hti_tbl… Département Nord-Est    hiv-posit…   2.1 female            355
-##  8 dhs_haiti… <NA>    <NA>  hti_tbl… Département Artibonite  hiv-posit…   3.3 female           1373
-##  9 dhs_haiti… <NA>    <NA>  hti_tbl… Département Centre      hiv-posit…   1.5 female            612
-## 10 dhs_haiti… <NA>    <NA>  hti_tbl… Département Sud         hiv-posit…   2   female            626
+##    svy_type country year  tbl_id    row_grp      row_lbl     indicator  value denom_grp denom_value
+##    <chr>    <chr>   <chr> <chr>     <chr>        <chr>       <chr>      <dbl> <chr>           <dbl>
+##  1 dhs      haiti   2017  hti_tbl_… Milieu de r… Urbain      hiv-posit…   2.2 female           4479
+##  2 dhs      haiti   2017  hti_tbl_… Milieu de r… Rural       hiv-posit…   2.4 female           5118
+##  3 dhs      haiti   2017  hti_tbl_… Département  Aire Métro… hiv-posit…   2.1 female           2438
+##  4 dhs      haiti   2017  hti_tbl_… Département  Reste Ouest hiv-posit…   1.6 female           1559
+##  5 dhs      haiti   2017  hti_tbl_… Département  Sud-Est     hiv-posit…   3.2 female            502
+##  6 dhs      haiti   2017  hti_tbl_… Département  Nord        hiv-posit…   2.7 female           1044
+##  7 dhs      haiti   2017  hti_tbl_… Département  Nord-Est    hiv-posit…   2.1 female            355
+##  8 dhs      haiti   2017  hti_tbl_… Département  Artibonite  hiv-posit…   3.3 female           1373
+##  9 dhs      haiti   2017  hti_tbl_… Département  Centre      hiv-posit…   1.5 female            612
+## 10 dhs      haiti   2017  hti_tbl_… Département  Sud         hiv-posit…   2   female            626
 ## # ... with 792 more rows
 ```
 
 ### We just built a function that scraped 8 tables of data from 4 different PDFs and created a tidy data frame 👏 👏 👏
 
-<center>
+<p align="center">
 
 ![](images/shawshank_escape.gif)
 
-</center>
+</p>
