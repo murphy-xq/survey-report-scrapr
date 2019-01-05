@@ -428,16 +428,16 @@ tbl_scrapes <- tbl_scrape_args %>%
 
 tbl_scrapes
 ## # A tibble: 8 x 8
-##   source      tbl_id       pg keys    source_folder str_split_regex              headers    output 
-##   <chr>       <chr>     <dbl> <list>  <chr>         <chr>                        <list>     <list> 
-## 1 dhs_haiti_… hti_tbl_…    62 <chr [… report-pdfs   "\\s(?=\\(?\\d{1,2}[,.]\\d|… <tibble [… <list …
-## 2 dhs_haiti_… hti_tbl_…    66 <chr [… report-pdfs   "\\s(?=\\(?\\d{1,2}[,.]\\d|… <tibble [… <list …
-## 3 mics_nkore… prk_tc_1…    80 <chr [… report-pdfs   "\\s(?=\\(?\\d{1,2}[,.]\\d|… <tibble [… <list …
-## 4 mics_nkore… prk_tc_2…    84 <chr [… report-pdfs   "\\s(?=\\(?\\d{1,2}[,.]\\d|… <tibble [… <list …
-## 5 mics_parag… pry_nu_5     75 <chr [… report-pdfs   "\\s(?=\\(?\\d{1,2}[,.]\\d|… <tibble [… <list …
-## 6 mics_parag… pry_mt_2    241 <chr [… report-pdfs   "\\s(?=\\(?\\d{1,2}[,.]\\d|… <tibble [… <list …
-## 7 dhs_uganda… uga_tbl_…   221 <chr [… report-pdfs   "\\s(?=\\(?\\d{1,2}[,.]\\d|… <tibble [… <list …
-## 8 dhs_uganda… uga_tbl_…   247 <chr [… report-pdfs   "\\s(?=\\(?\\d{1,2}[,.]\\d|… <tibble [… <list …
+##   source      tbl_id       pg keys    source_folder str_split_regex               headers    output 
+##   <chr>       <chr>     <dbl> <list>  <chr>         <chr>                         <list>     <list> 
+## 1 dhs_haiti_… hti_tbl_…    62 <chr [… report-pdfs   "\\s(?=\\(?\\d{1,2}[,.]\\d|^… <tibble [… <list …
+## 2 dhs_haiti_… hti_tbl_…    66 <chr [… report-pdfs   "\\s(?=\\(?\\d{1,2}[,.]\\d|^… <tibble [… <list …
+## 3 mics_nkore… prk_tc_1…    80 <chr [… report-pdfs   "\\s(?=\\(?\\d{1,2}[,.]\\d|^… <tibble [… <list …
+## 4 mics_nkore… prk_tc_2…    84 <chr [… report-pdfs   "\\s(?=\\(?\\d{1,2}[,.]\\d|^… <tibble [… <list …
+## 5 mics_parag… pry_nu_5     75 <chr [… report-pdfs   "\\s(?=\\(?\\d{1,2}[,.]\\d|^… <tibble [… <list …
+## 6 mics_parag… pry_mt_2    241 <chr [… report-pdfs   "\\s(?=\\(?\\d{1,2}[,.]\\d|^… <tibble [… <list …
+## 7 dhs_uganda… uga_tbl_…   221 <chr [… report-pdfs   "\\s(?=\\(?\\d{1,2}[,.]\\d|^… <tibble [… <list …
+## 8 dhs_uganda… uga_tbl_…   247 <chr [… report-pdfs   "\\s(?=\\(?\\d{1,2}[,.]\\d|^… <tibble [… <list …
 ```
 
 Great\! We have a data frame that includes all the input parameters as
@@ -450,18 +450,18 @@ take a look at the output to make sure we are on track and then use
 # inspect some table output
 tbl_scrapes[['output']][[4]][[1]]
 ## # A tibble: 26 x 6
-##    row_grp  row_lbl    `episode-diarrhoea_… `ari-syptoms_age0… `episode-fever_age… `denom_age0-59m`
-##    <chr>    <chr>      <chr>                <chr>              <chr>               <chr>           
-##  1 Total    Total      11.4                 0.5                6.8                 2275            
-##  2 Sex      Male       12.3                 0.4                6.0                 1164            
-##  3 Sex      Female     10.5                 0.6                7.6                 1111            
-##  4 Area     Urban      10.1                 0.6                6.9                 1361            
-##  5 Area     Rural      13.4                 0.4                6.6                 914             
-##  6 Province Ryanggang  10.5                 0.9                8.3                 71              
-##  7 Province North Ham… 12.7                 1.3                5.8                 221             
-##  8 Province South Ham… 10.6                 0.0                9.2                 298             
-##  9 Province Kangwon    9.9                  2.2                6.5                 148             
-## 10 Province Jagang     12.8                 0.4                7.3                 131             
+##    row_grp  row_lbl    `episode-diarrhoea_a… `ari-syptoms_age0… `episode-fever_age… `denom_age0-59m`
+##    <chr>    <chr>      <chr>                 <chr>              <chr>               <chr>           
+##  1 Total    Total      11.4                  0.5                6.8                 2275            
+##  2 Sex      Male       12.3                  0.4                6.0                 1164            
+##  3 Sex      Female     10.5                  0.6                7.6                 1111            
+##  4 Area     Urban      10.1                  0.6                6.9                 1361            
+##  5 Area     Rural      13.4                  0.4                6.6                 914             
+##  6 Province Ryanggang  10.5                  0.9                8.3                 71              
+##  7 Province North Ham… 12.7                  1.3                5.8                 221             
+##  8 Province South Ham… 10.6                  0.0                9.2                 298             
+##  9 Province Kangwon    9.9                   2.2                6.5                 148             
+## 10 Province Jagang     12.8                  0.4                7.3                 131             
 ## # ... with 16 more rows
 tbl_scrapes[['output']][[4]][[2]]
 ## # A tibble: 104 x 6
@@ -484,48 +484,47 @@ full_rshp <- tbl_scrapes[["output"]] %>%
   map_dfr(2) %>%
   separate(source, c("svy_type", "country", "year"), sep = "_", remove = FALSE) %>%
   separate(indicator, c("indicator","denom_grp"), sep = "_") %>%
-  mutate(value = as.numeric(value),
-         # key needed to create `denom_values` variable in `master_df`
-         denom_key = str_c(source, tbl_id, row_grp, row_lbl, denom_grp, sep = "_"))
+  mutate(value = as.numeric(value))
 
 full_rshp
-## # A tibble: 1,079 x 11
-##    source  svy_type country year  tbl_id  row_grp  row_lbl  indicator denom_grp value denom_key    
-##    <chr>   <chr>    <chr>   <chr> <chr>   <chr>    <chr>    <chr>     <chr>     <dbl> <chr>        
-##  1 dhs_ha… dhs      haiti   2017  hti_tb… Milieu … Urbain   hiv-posi… female      2.2 dhs_haiti_20…
-##  2 dhs_ha… dhs      haiti   2017  hti_tb… Milieu … Rural    hiv-posi… female      2.4 dhs_haiti_20…
-##  3 dhs_ha… dhs      haiti   2017  hti_tb… Départe… Aire Mé… hiv-posi… female      2.1 dhs_haiti_20…
-##  4 dhs_ha… dhs      haiti   2017  hti_tb… Départe… Reste O… hiv-posi… female      1.6 dhs_haiti_20…
-##  5 dhs_ha… dhs      haiti   2017  hti_tb… Départe… Sud-Est  hiv-posi… female      3.2 dhs_haiti_20…
-##  6 dhs_ha… dhs      haiti   2017  hti_tb… Départe… Nord     hiv-posi… female      2.7 dhs_haiti_20…
-##  7 dhs_ha… dhs      haiti   2017  hti_tb… Départe… Nord-Est hiv-posi… female      2.1 dhs_haiti_20…
-##  8 dhs_ha… dhs      haiti   2017  hti_tb… Départe… Artibon… hiv-posi… female      3.3 dhs_haiti_20…
-##  9 dhs_ha… dhs      haiti   2017  hti_tb… Départe… Centre   hiv-posi… female      1.5 dhs_haiti_20…
-## 10 dhs_ha… dhs      haiti   2017  hti_tb… Départe… Sud      hiv-posi… female      2   dhs_haiti_20…
+## # A tibble: 1,079 x 10
+##    source     svy_type country year  tbl_id    row_grp       row_lbl      indicator  denom_grp value
+##    <chr>      <chr>    <chr>   <chr> <chr>     <chr>         <chr>        <chr>      <chr>     <dbl>
+##  1 dhs_haiti… dhs      haiti   2017  hti_tbl_… Milieu de ré… Urbain       hiv-posit… female      2.2
+##  2 dhs_haiti… dhs      haiti   2017  hti_tbl_… Milieu de ré… Rural        hiv-posit… female      2.4
+##  3 dhs_haiti… dhs      haiti   2017  hti_tbl_… Département   Aire Métrop… hiv-posit… female      2.1
+##  4 dhs_haiti… dhs      haiti   2017  hti_tbl_… Département   Reste Ouest  hiv-posit… female      1.6
+##  5 dhs_haiti… dhs      haiti   2017  hti_tbl_… Département   Sud-Est      hiv-posit… female      3.2
+##  6 dhs_haiti… dhs      haiti   2017  hti_tbl_… Département   Nord         hiv-posit… female      2.7
+##  7 dhs_haiti… dhs      haiti   2017  hti_tbl_… Département   Nord-Est     hiv-posit… female      2.1
+##  8 dhs_haiti… dhs      haiti   2017  hti_tbl_… Département   Artibonite   hiv-posit… female      3.3
+##  9 dhs_haiti… dhs      haiti   2017  hti_tbl_… Département   Centre       hiv-posit… female      1.5
+## 10 dhs_haiti… dhs      haiti   2017  hti_tbl_… Département   Sud          hiv-posit… female      2  
 ## # ... with 1,069 more rows
 
-# use right_join() to match denominator value for each observation
+# implement a self-join to match denominator value for each observation
 master_df <- full_rshp %>%
-  filter(str_detect(indicator, "denom")) %>%
-  select(denom_value = value, denom_key) %>%
-  right_join(., full_rshp, by = "denom_key") %>%
-  filter(!str_detect(indicator, "denom")) %>%
-  select(svy_type:indicator, value, denom_grp, denom_value)
+  left_join(x = filter(., !str_detect(indicator, "denom")),
+            y = filter(., str_detect(indicator, "denom")),
+            by = c("source", "tbl_id", "row_grp", "row_lbl", "denom_grp")) %>% 
+  select(source, svy_type = svy_type.x, country = country.x, year = year.x,
+         tbl_id, row_grp, row_lbl, indicator = indicator.x, value = value.x,
+         denom_grp, denom_value = value.y)
 
 master_df
-## # A tibble: 802 x 10
-##    svy_type country year  tbl_id    row_grp      row_lbl     indicator  value denom_grp denom_value
-##    <chr>    <chr>   <chr> <chr>     <chr>        <chr>       <chr>      <dbl> <chr>           <dbl>
-##  1 dhs      haiti   2017  hti_tbl_… Milieu de r… Urbain      hiv-posit…   2.2 female           4479
-##  2 dhs      haiti   2017  hti_tbl_… Milieu de r… Rural       hiv-posit…   2.4 female           5118
-##  3 dhs      haiti   2017  hti_tbl_… Département  Aire Métro… hiv-posit…   2.1 female           2438
-##  4 dhs      haiti   2017  hti_tbl_… Département  Reste Ouest hiv-posit…   1.6 female           1559
-##  5 dhs      haiti   2017  hti_tbl_… Département  Sud-Est     hiv-posit…   3.2 female            502
-##  6 dhs      haiti   2017  hti_tbl_… Département  Nord        hiv-posit…   2.7 female           1044
-##  7 dhs      haiti   2017  hti_tbl_… Département  Nord-Est    hiv-posit…   2.1 female            355
-##  8 dhs      haiti   2017  hti_tbl_… Département  Artibonite  hiv-posit…   3.3 female           1373
-##  9 dhs      haiti   2017  hti_tbl_… Département  Centre      hiv-posit…   1.5 female            612
-## 10 dhs      haiti   2017  hti_tbl_… Département  Sud         hiv-posit…   2   female            626
+## # A tibble: 802 x 11
+##    source   svy_type country year  tbl_id  row_grp   row_lbl   indicator value denom_grp denom_value
+##    <chr>    <chr>    <chr>   <chr> <chr>   <chr>     <chr>     <chr>     <dbl> <chr>           <dbl>
+##  1 dhs_hai… dhs      haiti   2017  hti_tb… Milieu d… Urbain    hiv-posi…   2.2 female           4479
+##  2 dhs_hai… dhs      haiti   2017  hti_tb… Milieu d… Rural     hiv-posi…   2.4 female           5118
+##  3 dhs_hai… dhs      haiti   2017  hti_tb… Départem… Aire Mét… hiv-posi…   2.1 female           2438
+##  4 dhs_hai… dhs      haiti   2017  hti_tb… Départem… Reste Ou… hiv-posi…   1.6 female           1559
+##  5 dhs_hai… dhs      haiti   2017  hti_tb… Départem… Sud-Est   hiv-posi…   3.2 female            502
+##  6 dhs_hai… dhs      haiti   2017  hti_tb… Départem… Nord      hiv-posi…   2.7 female           1044
+##  7 dhs_hai… dhs      haiti   2017  hti_tb… Départem… Nord-Est  hiv-posi…   2.1 female            355
+##  8 dhs_hai… dhs      haiti   2017  hti_tb… Départem… Artiboni… hiv-posi…   3.3 female           1373
+##  9 dhs_hai… dhs      haiti   2017  hti_tb… Départem… Centre    hiv-posi…   1.5 female            612
+## 10 dhs_hai… dhs      haiti   2017  hti_tb… Départem… Sud       hiv-posi…   2   female            626
 ## # ... with 792 more rows
 ```
 
