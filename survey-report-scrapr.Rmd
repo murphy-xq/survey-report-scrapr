@@ -290,19 +290,18 @@ full_rshp <- tbl_scrapes[["output"]] %>%
   map_dfr(2) %>%
   separate(source, c("svy_type", "country", "year"), sep = "_", remove = FALSE) %>%
   separate(indicator, c("indicator","denom_grp"), sep = "_") %>%
-  mutate(value = as.numeric(value),
-         # key needed to create `denom_values` variable in `master_df`
-         denom_key = str_c(source, tbl_id, row_grp, row_lbl, denom_grp, sep = "_"))
+  mutate(value = as.numeric(value))
 
 full_rshp
 
-# use right_join() to match denominator value for each observation
+# implement a self-join to match denominator value for each observation
 master_df <- full_rshp %>%
-  filter(str_detect(indicator, "denom")) %>%
-  select(denom_value = value, denom_key) %>%
-  right_join(., full_rshp, by = "denom_key") %>%
-  filter(!str_detect(indicator, "denom")) %>%
-  select(svy_type:indicator, value, denom_grp, denom_value)
+  left_join(x = filter(., !str_detect(indicator, "denom")),
+            y = filter(., str_detect(indicator, "denom")),
+            by = c("source", "tbl_id", "row_grp", "row_lbl", "denom_grp")) %>% 
+  select(source, svy_type = svy_type.x, country = country.x, year = year.x,
+         tbl_id, row_grp, row_lbl, indicator = indicator.x, value = value.x,
+         denom_grp, denom_value = value.y)
 
 master_df
 ```
